@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title></title>
+</head>
+<body>
+<h1>upload</h1>
+<form action="/api/photo" method="post" enctype="multipart/form-data">
+    <input type="file" name="userPhoto" />
+    <a href="#">전송</a>
+</form>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+$('a').on('click', function(e){
+    var frmData = new FormData();
+    
+    frmData.append($('input[type=file]')[0].files);
+    
+    //기본옵션
+    var option = {
+        url: '',            //요청 URL
+        method: 'POST',      //http 요청 타입 (default : 'GET')
+        data: frmData,         //쿼리 파라미터 (Object)
+        dataType: 'json',   //응답받을 데어터 타입 (xml, json, script, html..)
+        cache: false,        //캐시 사용 여부(default: true)
+        //전송할 데이터의 contentType, 이미지데이터 전송시 false(default: 'application/x-www-form-urlencoded; charset=UTF-8')
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        processData: false,  //데이터 전송 형태, 이미지데이터 전송시 false(default: true)
+        success: function(data, textStatus, jqXHR){ //요청 성공시
+            console.log(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown){    //요청 실패시
+        },
+        complete: function(){   //성공, 실패 상관 없이 요청 완료시
+        }
+    };
+    
+    $.ajax(jsonp_option);
+});
+
+
+
+</script>
+</body>
+</html>
