@@ -11,7 +11,6 @@ const app = express();
 app.use(morgan('dev'));
 // app.use(bodyParser.urlencoded({extended: false}));
 // app.use(bodyParser.json());
-//app.use(multer());
 
 app.use('/', express.static(path.join(__dirname, '../public')));
 app.use('/upload', express.static(path.join(__dirname, '../upload')));
@@ -19,9 +18,6 @@ app.use('/upload', express.static(path.join(__dirname, '../upload')));
 const maxFileCount = 5;
 const maxFileSize = 3 * 1000 * 1000;
 const filePath = path.join(__dirname, '../upload');
-
-let i = 0;
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, filePath);
@@ -51,11 +47,15 @@ app.post('/api/photo', (req, res) => {
         
         for(var i=0; i<fileCount; i++){
             originalFileNm = files[i].originalname;
-            savedFileNm = files[i].filename;
             fileSize = files[i].size;
+            savedFileNm = files[i].filename;
             
             array.push({
-                src: '/upload/' + savedFileNm
+                originalName: files[i].originalname,
+                savedName: files[i].filename,
+                type: files[i].mimetype,
+                size: files[i].size,
+                src: '/upload/' + files[i].filename
             });
         }
         
